@@ -19,7 +19,7 @@ export default function navbar() {
             px-4 sm:px-6 lg:max-w-7xl">
                 <Link href="/">
                     <h1 className="text-2xl md:text-4xl font-bold">
-                        <span className="text-primary">Piccola</span>
+                        <span className="text-red-500">Piccola</span>
                     </h1>
                 </Link>
                 <nav className="hidden gap-12 lg:flex 2xl:ml-16">
@@ -27,13 +27,13 @@ export default function navbar() {
                         <div key = {idx}>
                             {pathname === link.href ? (
                                 <Link 
-                                 className ="text-lg font-semihold text-primary"
+                                 className ="text-lg font-semihold text-primary text-red-600"
                                  href={link.href}>
                                     {link.name}
                                  </Link>
                             ): (
                                 <Link 
-                                 className ="text-lg font-semihold text-primary"
+                                 className ="text-lg font-semihold text-primary hover:text-red-600"
                                  href={link.href}>
                                     {link.name}
                                  </Link>

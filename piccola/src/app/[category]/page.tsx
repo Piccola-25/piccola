@@ -1,13 +1,58 @@
+import { productSchema } from "../interface";
+import { client } from "../lib/sanity";
+import Image from "next/image";
+import Link from "next/link";
+
 async function getData(category: string) {
-    // Placeholder function to fetch category data
-    return null;
+    const query = `*[_type == 'product' && category->title == "${category}"]{
+        _id,
+        name,
+        price,
+        "slug": slug.current,
+        "imageUrl": images[0].asset->url,
+        "categoryName": category->category
+    }`;
+
+    const data = await client.fetch(query);
+
+    return data;
 }
+export default async function CategoryPage({params}: {params: {category: string};}) {
+const data:productSchema[] = await getData(params.category);
 
-
-export default function CategoryPage() {
     return (
-        <div>
-            <h1>Category Page</h1>
+         <div className="bg-white">
+            <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900">{params.category}'s Collection</h2>
+            
+            </div>
+            <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                {data.map((product) => (
+                    <div key = {product._id} className="group relative">
+                        <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
+                            <Image
+                            src={product.imageUrl}
+                            alt="Failed to load image"
+                            className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                            width={500}
+                            height={500}
+                            />
+                        </div>
+                        <div className="mt-4 flex justify-between">
+                            <div>
+                                <h3 className="text-sm text-gray-700">
+                                    <Link href={`/product/${product.slug}`}>
+                                        {product.name}
+                                    </Link>
+                                    </h3>
+                                </div>
+                                <p>${product.price}</p>
+                            </div>
+            </div>
+                ))}
+        </div>
+        </div>
         </div>
     )
 }
