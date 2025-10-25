@@ -1,3 +1,4 @@
+import AddToBag from "@/app/components/AddToBag";
 import ImageGallery from "@/app/components/ImageGallery";
 import { fullProductSchema } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
@@ -56,7 +57,7 @@ return (
                         <span className="text-sm">Delivery in 3-5 business days</span>
                     </div>
                     <div className="flex gap-2.5">
-                        <Button variant={"outline"}>Add To Bag</Button>
+                        <AddToBag currency="INR" description={data.description} image={data.images[0]} name={data.name} price={data.price} key={data._id}/>
                         <Button variant={"secondary"}>Checkout now</Button>                
                         </div>
                         <p className="mt-6 text-base text-gray-500 tracking-wide">{data.description}</p>
