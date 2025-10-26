@@ -8,7 +8,7 @@ import {
 import { useShoppingCart } from "use-shopping-cart";
 
 export default function ShoppingCartModel() {
-    const {cartCount, shouldDisplayCart, handleCartClick} = useShoppingCart();
+    const {cartCount, shouldDisplayCart, handleCartClick, cartDetails} = useShoppingCart();
    return (
     <Sheet open={shouldDisplayCart} onOpenChange={handleCartClick}>
       <SheetContent className="sm:max-w-lg w-[90vw] bg-white opacity-90">
@@ -23,7 +23,17 @@ export default function ShoppingCartModel() {
                 {cartCount === 0 ? (
                     <h1 className="py-6">No items in cart</h1>
                 ) : (
-                    <h1>No items in cart</h1>
+                    <>
+                    { 
+                      Object.values(cartDetails ?? {}).map ((entry)=>(
+                        <li key={entry.id} className="flex py-6">
+                          <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                              <Image src ={entry.image as string} alt= "Product Image" width={100} height={100}/> 
+                          </div>
+                        </li>
+
+                      ))}
+                    </>
                 )}
                 </ul>
             </div>
